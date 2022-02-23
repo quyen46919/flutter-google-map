@@ -18,6 +18,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   );
 
   late GoogleMapController _googleMapController;
+
   late final Marker _origin = Marker(
     markerId: const MarkerId('DONG_A_University'),
     infoWindow: InfoWindow(
@@ -33,19 +34,20 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
     position: const LatLng(16.0323, 108.2211),
   );
-  late Marker _destination;
   late final Set<Marker> _markerList = {_origin};
+
+  late Marker _destination;
 
   // Object for PolylinePoints
   late PolylinePoints polylinePoints;
 
-// List of coordinates to join
+  // List of coordinates to join
   List<LatLng> polylineCoordinates = [];
 
-// Map storing polylines created by connecting two points
+  // Map storing polylines created by connecting two points
   Map<PolylineId, Polyline> polylines = {};
 
-// Create the polylines for showing the route between two places
+  // Create the polylines for showing the route between two places
   Future<Polyline> _createPolylines(
       double startLatitude,
       double startLongitude,
@@ -65,7 +67,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       PointLatLng(destinationLatitude, destinationLongitude),
       travelMode: TravelMode.transit,
     );
-
     print(result.errorMessage);
     print(result.status);
     print(result.points);
@@ -76,7 +77,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
-
     // Defining an ID
     PolylineId id = const PolylineId('poly');
 
@@ -87,11 +87,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       points: polylineCoordinates,
       width: 3,
     );
-
     // Adding the polyline to the map
     polylines[id] = polyline;
 
-    print(polylineCoordinates);
     return polyline;
   }
 
